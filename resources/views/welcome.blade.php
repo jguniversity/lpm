@@ -467,8 +467,8 @@
                                 <h2>Kontak</h2>
                             </div>
                             <div class="footer_bottom-item footer_social-media penci-col-3">
-                                <div class="block-title mb-4"><br><span>Butuh bantuan? silahkan hubungi
-                                        LPM<br>{{ $CONTACT->title }} : {{ $CONTACT->content }}</span></div>
+                                <div class="block-title mb-4"><br><span>Butuh bantuan LPM JGU?
+                                        <br>Silahkan hubungi {{ $CONTACT->title }} : {{ $CONTACT->content }}</span></div>
                                 <a class="social-media-item socail_media_facebook mx-3" target="_blank"
                                     href="https://www.facebook.com/jakartaglobaluniversity" title="Facebook"
                                     rel="noopener"><span class="socail-media-itemcontent"><i

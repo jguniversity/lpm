@@ -43,4 +43,4 @@ Buka CMD atau Termianal pada Visual Studio Code:
 - Migrasi tabel dan seeder database: <code>php artisan migrate --seed</code>
 - Jalankan sistem (kalau di localhost): <code>php artisan serve</code>
 
-- Jika ada pertanyaan hubungi [https://alifikri.com](https://alifikri.com)
+- Jika ada pertanyaan hubungi [https://instagram.com/alifikriaf](@alifikri)
