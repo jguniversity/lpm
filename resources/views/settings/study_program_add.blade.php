@@ -50,7 +50,7 @@
                                     @foreach($data as $p)
                                     <option value="{{ $p->id }}"
                                         {{ ($p->id==old('acreditation_id') ? "selected": "") }}>
-                                        {{ $p->id }} - {{ $p->name }}</option>
+                                        {{ $p->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('criteria_category_id')

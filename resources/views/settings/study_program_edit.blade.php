@@ -48,7 +48,7 @@
                                     @foreach($acreditation as $p)
                                     <option value="{{ $p->id }}"
                                         {{ ($p->id==$data->acreditation_id ? "selected": "") }}>
-                                        {{ $p->id }} - {{ $p->name }}</option>
+                                        {{ $p->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

@@ -66,7 +66,7 @@ class HomeController extends Controller
 
     public function akreditasi()
     {
-        $data = Acreditation::orderBy('id')->get();
+        $data = Acreditation::orderBy('id', 'DESC')->get();
         return view('page.akreditasi-jgu', compact('data'));
     }
 

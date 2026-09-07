@@ -399,7 +399,7 @@ class SettingController extends Controller
             StudyProgram::insert(request()->except(['_token']));
             return redirect()->route('settings.study_program');
         } 
-        $data = Acreditation::get();
+        $data = Acreditation::orderBy('id', 'DESC')->get();
         return view('settings.study_program_add', compact('data'));
     }
 
@@ -419,7 +419,7 @@ class SettingController extends Controller
         if($data == null){
             abort(403, "Cannot access to restricted page");
         }
-        $acreditation = Acreditation::get();
+        $acreditation = Acreditation::orderBy('id', 'DESC')->get();
         return view('settings.study_program_edit', compact('data','acreditation'));
     }
 

@@ -22,6 +22,11 @@ class AcreditationSeeder extends Seeder
             ["id" => "4", "name" => "Unggul", "star_point" => 3],
             ["id" => "5", "name" => "Baik Sekali", "star_point" => 2],
             ["id" => "6", "name" => "Baik", "star_point" => 1],
+
+            ["id" => "7", "name" => "Terakreditasi Unggul", "star_point" => 3],
+            ["id" => "8", "name" => "Terakreditasi", "star_point" => 2],
+            ["id" => "9", "name" => "Terakreditasi Sementara", "star_point" => 1],
+            ["id" => "10", "name" => "Tidak Terakreditasi", "star_point" => 0],
         ];
 
         foreach ($data as $x) {
