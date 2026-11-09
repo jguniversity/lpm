@@ -15,6 +15,7 @@ use App\Models\Criteria;
 use App\Models\Acreditation;
 use App\Models\StudyProgram;
 use App\Models\Publication;
+use App\Models\Instrument;
 use App\Models\Observation_category;
 use App\Models\Observation_Criteria;
 use App\Models\Setting;
@@ -439,7 +440,44 @@ class SettingController extends Controller
             ]);
         }
     }
+    public function spmi_links(Request $request) {
+        return view('settings.spmi_links');
+    }
 
+    public function spmi_links_add(Request $request) {
+        if ($request->isMethod('post')) {
+            $this->validate($request, [ 
+                'title'=> ['required'],
+                'content'=> ['required'],
+            ]);
+            Instrument::insert(request()->except(['_token']) +
+                [
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]
+            );
+            return redirect()->route('settings.spmi_links');
+        } 
+        $data = Instrument::get();
+        return view('settings.spmi_links_add', compact('data'));
+    }
+
+    public function spmi_links_delete(Request $request) { 
+        $data = Instrument::find($request->id);
+        if($data){
+            Log::warning(Auth::user()->username." deleted Instrument SPMI #".$data->id.", title : ".$data->title);
+            $data->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Record deleted successfully!'
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to delete!'
+            ]);
+        }
+    }
 
     public function publication(Request $request) {
         return view('settings.publication');

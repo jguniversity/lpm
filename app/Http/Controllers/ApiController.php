@@ -20,6 +20,7 @@ use App\Models\User_role;
 use App\Models\Setting;
 use App\Models\StudyProgram;
 use App\Models\Publication;
+use App\Models\Instrument;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Crypt;
@@ -123,6 +124,26 @@ class ApiController extends Controller
                              $instance->where(function($w) use($request){
                                 $search = $request->get('search');
                                     $w->orWhere('name', 'LIKE', "%$search%");
+                            });
+                        }
+                    })
+                    ->addColumn('link', function($x){
+                        return Crypt::encrypt($x['id']);
+                      })
+                    ->rawColumns(['link'])
+                    ->make(true);
+    }
+
+
+    public function spmi_links(Request $request)
+    {
+        $data = Instrument::select('*')->orderBy('id');
+            return Datatables::of($data)
+                    ->filter(function ($instance) use ($request) {
+                        if (!empty($request->get('search'))) {
+                             $instance->where(function($w) use($request){
+                                $search = $request->get('search');
+                                    $w->orWhere('title', 'LIKE', "%$search%");
                             });
                         }
                     })

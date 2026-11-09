@@ -91,7 +91,9 @@
                             <li><a class="lan-4 {{ Route::currentRouteName()=='settings.general' ? 'active' : '' }}"
                                     href="{{route('settings.general')}}">General Setting</a></li>
                             <li><a class="lan-4 {{ Route::currentRouteName()=='settings.study_program' ? 'active' : '' }}"
-                                    href="{{route('settings.study_program')}}">Study Program</a></li>
+                                    href="{{route('settings.study_program')}}">Study Programs</a></li>
+                            <li><a class="lan-4 {{ Route::currentRouteName()=='settings.spmi_links' ? 'active' : '' }}"
+                                    href="{{route('settings.spmi_links')}}">SPMI Links</a></li>
                             <li><a class="lan-4 {{ Route::currentRouteName()=='settings.publication' ? 'active' : '' }}"
                                     href="{{route('settings.publication')}}">Publications</a></li>
                         </ul>

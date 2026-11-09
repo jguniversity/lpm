@@ -62,6 +62,11 @@ Route::group(['prefix' => 'settings', 'middleware' => ['auth', 'role:AD']], func
     Route::any('study_program/add', [App\Http\Controllers\SettingController::class, 'study_program_add'])->name('settings.study_program_add');
     Route::any('study_program/edit/{id}', [App\Http\Controllers\SettingController::class, 'study_program_edit'])->name('settings.study_program_edit');
     Route::delete('study_program/delete', [App\Http\Controllers\SettingController::class, 'study_program_delete'])->name('settings.study_program_delete');
+
+    Route::get('spmi_links', [App\Http\Controllers\SettingController::class, 'spmi_links'])->name('settings.spmi_links');
+    Route::any('spmi_links/add', [App\Http\Controllers\SettingController::class, 'spmi_links_add'])->name('settings.spmi_links_add');
+    Route::delete('spmi_links/delete', [App\Http\Controllers\SettingController::class, 'spmi_links_delete'])->name('settings.spmi_links_delete');
+
     Route::get('publication', [App\Http\Controllers\SettingController::class, 'publication'])->name('settings.publication');
     Route::any('publication/add', [App\Http\Controllers\SettingController::class, 'publication_add'])->name('settings.publication_add');
     Route::delete('publication/delete', [App\Http\Controllers\SettingController::class, 'publication_delete'])->name('settings.publication_delete');
@@ -130,6 +135,7 @@ Route::group(['prefix' => 'web/api', 'middleware' => ['auth']], function() {
 //API
 Route::group(['prefix' => 'web/api'], function() {
     Route::get('study_program', [App\Http\Controllers\ApiController::class, 'study_program'])->name('api.study_program');
+    Route::get('spmi_links', [App\Http\Controllers\ApiController::class, 'spmi_links'])->name('api.spmi_links');
     Route::get('publication', [App\Http\Controllers\ApiController::class, 'publication'])->name('api.publication');
 });
 

@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Setting;
 use App\Models\StudyProgram;
 use App\Models\Acreditation;
+use App\Models\Instrument;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
@@ -37,13 +38,6 @@ class HomeController extends Controller
     {
         if(env('ALIFIKRI')){
             $CONTACT = Setting::findOrFail('CONTACT');
-            $LINKINSTRUMENT = Setting::where('content', '!=', '')->find('LINKINSTRUMENT');
-            $LINKINSTRUMENT2 = Setting::where('content', '!=', '')->find('LINKINSTRUMENT2');
-            $LINKINSTRUMENT3 = Setting::where('content', '!=', '')->find('LINKINSTRUMENT3');
-            $LINKINSTRUMENT4 = Setting::where('content', '!=', '')->find('LINKINSTRUMENT4');
-            $LINKINSTRUMENT5 = Setting::where('content', '!=', '')->find('LINKINSTRUMENT5');
-            $LINKINSTRUMENT6 = Setting::where('content', '!=', '')->find('LINKINSTRUMENT6');
-            $LINKINSTRUMENT7 = Setting::where('content', '!=', '')->find('LINKINSTRUMENT7');
             $LINKSURVEY = Setting::where('content', '!=', '')->find('LINKSURVEY');
             $study_program = StudyProgram::with('acreditation')
                                 ->orderBy(
@@ -51,10 +45,16 @@ class HomeController extends Controller
                                         ->whereColumn('acreditations.id', 'study_programs.acreditation_id'),
                                     'desc'
                                 )
+                                ->orderBy(
+                                    Acreditation::select('star_point')
+                                        ->whereColumn('acreditations.id', 'study_programs.name'),
+                                    'desc'
+                                )
                                 ->orderBy('name', 'asc')
                                 ->get();
+            $LINKINSTRUMENT = Instrument::orderBy('id', 'asc')->get();
             return view('welcome', compact('CONTACT',
-            'LINKINSTRUMENT','LINKINSTRUMENT2','LINKINSTRUMENT3','LINKINSTRUMENT4','LINKINSTRUMENT5','LINKINSTRUMENT6','LINKINSTRUMENT7',
+            'LINKINSTRUMENT',
             'LINKSURVEY',
             'study_program'));
         } else {
