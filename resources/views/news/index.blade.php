@@ -212,7 +212,7 @@
                                         alt="{{ $post->title }}">
                                 @else
                                     <img
-                                        src="{{ asset('assets/images/blog/blog-7.jpg') }}"
+                                        src="{{ asset('assets/images/landing/screen2.jpg') }}"
                                         class="news-image"
                                         alt="{{ $post->title }}">
                                 @endif
