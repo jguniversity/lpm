@@ -435,7 +435,7 @@
                                                         style="width: 100%; height: 200px; object-fit: cover;">
                                                     @else
                                                     <img class="img-fluid top-radius-blog"
-                                                        src="{{ asset('assets/images/blog/blog-7.jpg') }}"
+                                                        src="{{ asset('assets/images/landing/screen2.jpg') }}"
                                                         alt="{{ $post->title }}"
                                                         style="width: 100%; height: 200px; object-fit: cover;">
                                                     @endif
