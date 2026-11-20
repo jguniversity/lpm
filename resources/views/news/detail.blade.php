@@ -10,6 +10,7 @@
           content="{{ $post->excerpt ?? $post->title }}">
     <meta name="author" content="LPM JGU">
 
+    <link rel="icon" href="{{ asset('assets/images/favicon.png') }}" type="image/x-icon">
     <title>{{ $post->title }} - LPM JGU</title>
 
     <link rel="icon" href="{{ asset('assets/images/favicon.png') }}">

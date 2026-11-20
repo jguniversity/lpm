@@ -444,6 +444,8 @@
                                                 <div class="blog-details-main">
                                                     <ul class="blog-social">
                                                         <li>
+                                                           
+                                                            <i class="fa fa-calendar"></i>
                                                             {{ $post->published_at->format('d F Y') }}
                                                         </li>
                                                     </ul>
