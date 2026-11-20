@@ -108,7 +108,8 @@
                                                     <a href="#instruments">SPMI</a>
                                                     <a href="#results">Hasil</a>
                                                     <a href="{{ route('target-renstra') }}#results">Target Renstra</a>
-                                                    <a href="{{ route('rencana-pengembangan') }}">Rencana Pengembangan</a>
+                                                    <a href="{{ route('rencana-pengembangan') }}">Rencana
+                                                        Pengembangan</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -116,9 +117,12 @@
                                     <li class="nav-item"><a class="nav-link px-3" href="#survey"
                                             style="text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;">
                                             <i class="icofont icofont-paperclip"></i> Survei</a></li>
+                                    <li class="nav-item"><a class="nav-link px-3" href="#news"
+                                            style="text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;">
+                                            <i class="icofont icofont-newspaper"></i> Berita</a></li>
                                     <li class="nav-item"><a class="nav-link px-3" href="#publication"
                                             style="text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;">
-                                            <i class="icofont icofont-newspaper"></i> Publikasi</a></li>
+                                            <i class="icofont icofont-archive"></i> Publikasi</a></li>
                                     <li class="nav-item"><a class="nav-link px-3" href="#contact"
                                             style="text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;">
                                             <i class="icofont icofont-ui-head-phone"></i> Kontak</a></li>
@@ -328,7 +332,7 @@
                         <a class="btn mrl5 btn-pill btn-outline-secondary mb-2 default-view" target="_blank"
                             href="{{ $i->content }}">{{ $i->title }}</a>
 
-            
+
                         @endforeach
                     </div>
                 </div>
@@ -405,6 +409,75 @@
             </div>
         </section>
 
+        <section class="section-space cuba-demo-section components-section bg-dark" id="news">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 wow pulse">
+                        <div class="cuba-demo-content">
+                            <div class="couting text-secondary">
+                                <h2>Berita</h2>
+                            </div>
+                        </div>
+                        <div class="card-body new-update pt-0">
+
+                            <div class="container-fluid">
+                                <div class="row">
+                                    @forelse($posts as $post)
+                                    <div class="col-md-6 col-xxl-3 box-col-6">
+                                        <div class="card">
+                                            <div class="blog-box blog-grid text-center">
+
+                                                <a href="{{ route('news.show', $post->slug) }}">
+                                                    @if($post->thumbnail)
+                                                    <img class="img-fluid top-radius-blog"
+                                                        src="{{ asset('storage/' . $post->thumbnail) }}"
+                                                        alt="{{ $post->title }}"
+                                                        style="width: 100%; height: 200px; object-fit: cover;">
+                                                    @else
+                                                    <img class="img-fluid top-radius-blog"
+                                                        src="{{ asset('assets/images/blog/blog-7.jpg') }}"
+                                                        alt="{{ $post->title }}"
+                                                        style="width: 100%; height: 200px; object-fit: cover;">
+                                                    @endif
+                                                </a>
+
+                                                <div class="blog-details-main">
+                                                    <ul class="blog-social">
+                                                        <li>
+                                                            {{ $post->published_at->format('d F Y') }}
+                                                        </li>
+                                                    </ul>
+
+                                                    <hr>
+
+                                                    <a href="{{ route('news.show', $post->slug) }}">
+                                                        <h5 class="blog-bottom-details text-secondary">
+                                                            {{ $post->title }}
+                                                        </h5>
+                                                    </a>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @empty
+                                    <div class="col-12 text-center">
+                                        <p class="text-muted">Belum ada berita yang dipublikasikan.</p>
+                                    </div>
+                                    @endforelse
+                                </div>
+
+                                <a class="btn mrl5 btn-pill btn-outline-secondary default-view mt-3"
+                                    href="{{ route('news.index') }}">
+                                    Berita Lainnya
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="section-space email_bg" id="publication">
             <div class="container container-modify">
                 <div class="row">
@@ -447,7 +520,8 @@
                             </div>
                             <div class="footer_bottom-item footer_social-media penci-col-3">
                                 <div class="block-title mb-4"><br><span>Butuh bantuan LPM JGU?
-                                        <br>Silahkan hubungi {{ $CONTACT->title }} : {{ $CONTACT->content }}</span></div>
+                                        <br>Silahkan hubungi {{ $CONTACT->title }} : {{ $CONTACT->content }}</span>
+                                </div>
                                 <a class="social-media-item socail_media_facebook mx-3" target="_blank"
                                     href="https://www.facebook.com/jakartaglobaluniversity" title="Facebook"
                                     rel="noopener"><span class="socail-media-itemcontent"><i

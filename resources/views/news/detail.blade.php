@@ -1,0 +1,410 @@
+
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="{{ $post->excerpt ?? $post->title }}">
+    <meta name="author" content="LPM JGU">
+
+    <title>{{ $post->title }} - LPM JGU</title>
+
+    <link rel="icon" href="{{ asset('assets/images/favicon.png') }}">
+
+    <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&display=swap"
+          rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+          rel="stylesheet">
+
+    @include('layouts.css')
+
+    <style>
+        body {
+            background: #f8f9fa;
+        }
+
+        .news-navbar {
+            background: #fff;
+            box-shadow: 0 2px 12px rgba(0,0,0,.08);
+        }
+
+        .news-navbar .navbar-brand img {
+            max-height: 55px;
+        }
+
+        .news-header {
+            background: #fff;
+            padding: 45px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .news-breadcrumb {
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .news-title {
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1.4;
+            color: #333;
+        }
+
+        .news-meta {
+            color: #888;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+
+        .news-main {
+            padding: 45px 0;
+        }
+
+        .news-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 15px rgba(0,0,0,.04);
+        }
+
+        .news-thumbnail {
+            width: 100%;
+            max-height: 480px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .post-content {
+            font-size: 16px;
+            line-height: 1.9;
+            color: #444;
+            overflow-wrap: anywhere;
+        }
+
+        .post-content img {
+            max-width: 100% !important;
+            height: auto !important;
+            display: block;
+            margin: 20px auto;
+        }
+
+        .post-content iframe {
+            max-width: 100%;
+        }
+
+        .post-content table {
+            max-width: 100%;
+            display: block;
+            overflow-x: auto;
+        }
+
+        .news-sidebar {
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,.04);
+        }
+
+        .sidebar-news {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            text-decoration: none;
+        }
+
+        .sidebar-news img {
+            width: 85px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .sidebar-news h6 {
+            color: #444;
+            line-height: 1.5;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .related-card img {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+        }
+
+        @media(max-width:767px) {
+            .news-title {
+                font-size: 24px;
+            }
+
+            .news-card {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+    <!-- JUDUL BERITA -->
+    <section class="news-header">
+        <div class="container">
+
+            <div class="news-breadcrumb">
+                <a href="{{ route('index') }}">Beranda</a>
+                <i class="fa fa-angle-right mx-2"></i>
+                <a href="{{ route('index') }}#news">Berita</a>
+                <i class="fa fa-angle-right mx-2"></i>
+                <span class="text-muted">Detail Berita</span>
+            </div>
+
+            <h1 class="news-title">
+                {{ $post->title }}
+            </h1>
+
+            <div class="news-meta">
+                <span>
+                    <i class="fa fa-calendar"></i>
+                    {{ $post->published_at->translatedFormat('d F Y') }}
+                </span>
+
+                <span class="mx-3">
+                    <i class="fa fa-folder"></i>
+                    {{ $post->category->name ?? 'Berita' }}
+                </span>
+
+                <span class="mx-3">
+                    <i class="fa fa-user"></i>
+                    {{ $post->author->name ?? 'LPM JGU' }}
+                </span>
+
+                <span>
+                     <i class="fa fa-eye"></i>
+                    {{ number_format($post->views, 0, ',', '.') }} kali dibaca
+                </span>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- KONTEN BERITA -->
+    <section class="news-main">
+        <div class="container">
+            <div class="row">
+
+                <!-- ARTIKEL UTAMA -->
+                <div class="col-lg-8 mb-4">
+
+                    <article class="news-card">
+
+                        @if($post->thumbnail)
+                            <img
+                                src="{{ asset('storage/' . $post->thumbnail) }}"
+                                class="news-thumbnail"
+                                alt="{{ $post->title }}">
+                        @endif
+
+                        @if($post->excerpt)
+                            <div class="mb-4">
+                                <p class="text-muted">
+                                    <strong>{{ $post->excerpt }}</strong>
+                                </p>
+                            </div>
+                        @endif
+
+                        <div class="post-content">
+                            {!! $post->content !!}
+                        </div>
+
+                        <!-- PHOTO GALLERY -->
+                        @if($post->images->count())
+                            <hr class="my-4">
+
+                            <h4 class="mb-4">Galeri Foto</h4>
+
+                            <div class="row">
+                                @foreach($post->images as $image)
+                                    <div class="col-md-4 col-6 mb-3">
+
+                                        <a href="{{ asset('storage/' . $image->image_path) }}"
+                                           target="_blank">
+
+                                            <img
+                                                src="{{ asset('storage/' . $image->image_path) }}"
+                                                class="gallery-image"
+                                                alt="{{ $image->caption ?? $post->title }}">
+                                        </a>
+
+                                        @if($image->caption)
+                                            <small class="text-muted">
+                                                {{ $image->caption }}
+                                            </small>
+                                        @endif
+
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+
+                        <hr class="my-4">
+
+                        <a href="{{ route('news.index') }}#news"
+                           class="btn btn-outline-secondary btn-pill">
+                            <i class="fa fa-arrow-left"></i>
+                            Kembali ke Berita
+                        </a>
+
+                    </article>
+
+                </div>
+
+
+                <!-- SIDEBAR -->
+                <div class="col-lg-4">
+
+                    <div class="news-sidebar">
+
+                        <h4 class="mb-4">Berita Terbaru</h4>
+
+                        @forelse($latestPosts as $latest)
+
+                            <a href="{{ route('news.show', $latest->slug) }}"
+                               class="sidebar-news">
+
+                                @if($latest->thumbnail)
+                                    <img
+                                        src="{{ asset('storage/' . $latest->thumbnail) }}"
+                                        alt="{{ $latest->title }}">
+                                @else
+                                    <img
+                                        src="{{ asset('assets/images/blog/blog-7.jpg') }}"
+                                        alt="{{ $latest->title }}">
+                                @endif
+
+                                <div>
+                                    <h6 class="mb-1">
+                                        {{ $latest->title }}
+                                    </h6>
+
+                                    <small class="text-muted">
+                                        {{ $latest->published_at->translatedFormat('d F Y') }}
+                                    </small>
+                                </div>
+
+                            </a>
+
+                        @empty
+
+                            <p class="text-muted">
+                                Belum ada berita lainnya.
+                            </p>
+
+                        @endforelse
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- BERITA TERKAIT -->
+            @if($relatedPosts->count())
+
+                <div class="mt-5">
+
+                    <h3 class="mb-4">Berita Terkait</h3>
+
+                    <div class="row">
+
+                        @foreach($relatedPosts as $related)
+
+                            <div class="col-md-4 mb-4">
+
+                                <div class="card related-card h-100">
+
+                                    <a href="{{ route('news.show', $related->slug) }}">
+
+                                        @if($related->thumbnail)
+                                            <img
+                                                src="{{ asset('storage/' . $related->thumbnail) }}"
+                                                alt="{{ $related->title }}">
+                                        @else
+                                            <img
+                                                src="{{ asset('assets/images/blog/blog-7.jpg') }}"
+                                                alt="{{ $related->title }}">
+                                        @endif
+
+                                    </a>
+
+                                    <div class="card-body">
+
+                                        <small class="text-muted">
+                                            {{ $related->published_at->translatedFormat('d F Y') }}
+                                        </small>
+
+                                        <h5 class="mt-2">
+                                            <a href="{{ route('news.show', $related->slug) }}"
+                                               class="text-dark">
+                                                {{ $related->title }}
+                                            </a>
+                                        </h5>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        @endforeach
+
+                    </div>
+
+                </div>
+
+            @endif
+
+        </div>
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer class="section-space bg-secondary py-4">
+        <div class="container text-center text-white">
+            <p class="mt-3 mb-1">
+                Lembaga Penjaminan Mutu
+                Jakarta Global University
+            </p>
+
+            <small>
+                Copyright © {{ date('Y') }} ITIC JGU.
+                All rights reserved.
+            </small>
+
+        </div>
+    </footer>
+
+</div>
+
+
+<script src="{{ asset('assets/js/jquery-3.5.1.min.js') }}"></script>
+<script src="{{ asset('assets/js/bootstrap/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/js/icons/feather-icon/feather.min.js') }}"></script>
+<script src="{{ asset('assets/js/config.js') }}"></script>
+<script src="{{ asset('assets/js/script2.js') }}"></script>
+
+</body>
+</html>

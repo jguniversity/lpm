@@ -32,6 +32,15 @@
                     </li>
                     @if(Auth::user()->hasRole('AD'))
                     <li class="sidebar-list">
+                    <label class="badge rounded-pill badge-primary" title="News"></label>
+                        <a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.posts.index' ? 'active' : '' }} "
+                            href="{{ route('admin.posts.index') }}">
+                            <i data-feather="edit"> </i><span>News</span>
+                        </a>
+                    </li>
+                    @endif
+                    @if(Auth::user()->hasRole('AD'))
+                    <li class="sidebar-list">
                     <label class="badge rounded-pill badge-primary" id="notif_schedules" title="Review Task"></label>
                         <a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='schedules' ? 'active' : '' }} "
                             href="{{route('schedules')}}">

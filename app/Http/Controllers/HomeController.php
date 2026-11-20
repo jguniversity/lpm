@@ -10,6 +10,7 @@ use App\Models\Setting;
 use App\Models\StudyProgram;
 use App\Models\Acreditation;
 use App\Models\Instrument;
+use App\Models\Post;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
@@ -53,7 +54,14 @@ class HomeController extends Controller
                                 ->orderBy('name', 'asc')
                                 ->get();
             $LINKINSTRUMENT = Instrument::orderBy('id', 'asc')->get();
-            return view('welcome', compact('CONTACT',
+            $posts = Post::with('category')
+                ->where('status', 'published')
+                ->whereNotNull('published_at')
+                ->where('published_at', '<=', now())
+                ->latest('published_at')
+                ->take(4)
+                ->get();
+            return view('welcome', compact('CONTACT', 'posts',
             'LINKINSTRUMENT',
             'LINKSURVEY',
             'study_program'));

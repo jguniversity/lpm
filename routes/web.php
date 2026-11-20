@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DevelopmentController;
+use App\Http\Controllers\Admin\PostController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Jenssegers\Date\Date;
@@ -24,6 +25,31 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return redirect()->route('dashboard');
 })->name('home');
+
+// Halaman berita publik
+Route::get('/berita', [App\Http\Controllers\NewsController::class, 'index'])
+    ->name('news.index');
+
+Route::get('/berita/{slug}', [App\Http\Controllers\NewsController::class, 'show'])
+    ->name('news.show');
+
+// ADMIN NEWS
+Route::middleware(['auth', 'role:AD'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+
+        Route::post('posts/upload-image', [PostController::class, 'uploadImage'])
+            ->name('posts.upload-image');
+
+        // Khusus upload melalui dialog CKEditor
+        Route::post('posts/upload-image-dialog', [PostController::class, 'uploadImageDialog'])
+            ->name('posts.upload-image-dialog');
+
+        Route::resource('posts', PostController::class);
+
+    });
+
 Route::get('/',[App\Http\Controllers\HomeController::class, 'index'])->name('index');
 Route::get('/akreditasi-JGU',[App\Http\Controllers\HomeController::class, 'akreditasi'])->name('akreditasi');
 Route::get('/login/sso_klas2/', [App\Http\Controllers\HomeController::class, 'sso_klas2'])->name('sso_klas2');
