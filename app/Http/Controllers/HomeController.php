@@ -41,13 +41,23 @@ class HomeController extends Controller
             $CONTACT = Setting::findOrFail('CONTACT');
             $LINKSURVEY = Setting::where('content', '!=', '')->find('LINKSURVEY');
             $study_program = StudyProgram::with('acreditation')
-                            ->orderBy(
-                                Acreditation::select('star_point')
-                                    ->whereColumn('acreditations.id', 'study_programs.acreditation_id'),
-                                'desc'
-                            )
-                            ->orderBy('name', 'asc')
-                            ->get();
+                ->orderBy(
+                    Acreditation::select('star_point')
+                        ->whereColumn('acreditations.id', 'study_programs.acreditation_id'),
+                    'desc'
+                )
+                ->orderBy(
+                    Acreditation::select('id')
+                        ->whereColumn('acreditations.id', 'study_programs.acreditation_id'),
+                    'desc'
+                )
+                ->orderBy(
+                    Acreditation::select('name')
+                        ->whereColumn('acreditations.id', 'study_programs.acreditation_id'),
+                    'desc'
+                )
+                ->orderBy('study_programs.name', 'asc')
+                ->get();
             $LINKINSTRUMENT = Instrument::orderBy('id', 'asc')->get();
             $posts = Post::with('category')
                 ->where('status', 'published')
