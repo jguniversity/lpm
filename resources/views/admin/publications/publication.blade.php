@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'SPMI Links')
+@section('title', 'Publications')
 
 @section('css')
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/select2.css')}}">
@@ -33,11 +33,10 @@
 @endsection
 
 @section('breadcrumb-title')
-<h3>@yield('title')</h3>
 @endsection
 
 @section('breadcrumb-items')
-<li class="breadcrumb-item">Settings</li>
+<li class="breadcrumb-item">Admin</li>
 <li class="breadcrumb-item active">@yield('title')</li>
 @endsection
 
@@ -48,11 +47,11 @@
             <div class="card">
                 <div class="row">
                     <div class="col-md-3">
-
+                    <h5>@yield('title')</h5>
                     </div>
                     <div class="col-md-9 d-flex justify-content-center justify-content-md-end">
                         <a class="btn btn-primary btn-block btn-mail" title="Add new"
-                            href="{{ route('settings.spmi_links_add')}}">
+                            href="{{ route('admin.publication_add')}}">
                             <i data-feather="plus"></i>New
                         </a>
                     </div>
@@ -67,8 +66,10 @@
                             <thead>
                                 <tr>
                                     <th scope="col" width="20px">No</th>
-                                    <th scope="col" width="300px">Title</th>
-                                    <th scope="col" >Link</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col" width="50px">Year</th>
+                                    <th scope="col" width="50px">Document</th>
+                                    <th scope="col" width="150px">Created by</th>
                                     <th scope="col" width="65px">Action</th>
                                 </tr>
                             </thead>
@@ -113,7 +114,7 @@
                 lengthMenu: '<span>Show:</span> _MENU_',
             },
             ajax: {
-                url: "{{ route('api.spmi_links') }}",
+                url: "{{ route('api.publication') }}",
                 data: function (d) {
                         d.search = $('input[type="search"]').val()
                 },
@@ -134,7 +135,28 @@
                 },
                 {
                     render: function (data, type, row, meta) {
-                        var x = row.content;
+                        var x = row.year;
+                        return x;
+                    },
+                },
+                {
+                    render: function (data, type, row, meta) {
+                        if(row.doc_link != null){
+                            var x = '<a href="'+row.doc_link+'" target="_blank"><span class="badge rounded-pill badge-success">View</span></a>';
+                        } else {
+                            var x = '<span class="badge rounded-pill badge-danger">not found</span>';
+                        }
+                        return x;
+                    },
+                    className: "text-center"
+                },
+                {
+                    render: function (data, type, row, meta) {
+                        if(row.user != null){
+                            var x = row.user.name;
+                        } else {
+                            var x = '';
+                        }
                         return x;
                     },
                 },
@@ -164,7 +186,7 @@
             .then((willDelete) => {
                 if (willDelete) {
                     $.ajax({
-                        url: "{{ route('settings.spmi_links_delete') }}",
+                        url: "{{ route('admin.publication_delete') }}",
                         type: "DELETE",
                         data: {
                             "id": id,

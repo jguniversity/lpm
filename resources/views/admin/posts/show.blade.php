@@ -107,11 +107,10 @@
 @endsection
 
 @section('breadcrumb-title')
-<h3>@yield('title')</h3>
 @endsection
 
 @section('breadcrumb-items')
-<li class="breadcrumb-item">Content</li>
+<li class="breadcrumb-item">Admin</li>
 <li class="breadcrumb-item">
     <a href="{{ route('admin.posts.index') }}">Posts</a>
 </li>
@@ -136,7 +135,7 @@
                                 target="_blank"
                                 class="btn btn-success btn-sm">
                                 <i class="fa fa-external-link"></i>
-                                Lihat Berita Publik
+                                View Post
                             </a>
                         @endif
                         <a href="{{ route('admin.posts.edit', $post->id) }}" class="btn btn-primary btn-sm">

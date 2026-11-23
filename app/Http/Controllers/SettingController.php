@@ -441,7 +441,7 @@ class SettingController extends Controller
         }
     }
     public function spmi_links(Request $request) {
-        return view('settings.spmi_links');
+        return view('admin.spmi.spmi_links');
     }
 
     public function spmi_links_add(Request $request) {
@@ -456,10 +456,10 @@ class SettingController extends Controller
                     'updated_at' => now(),
                 ]
             );
-            return redirect()->route('settings.spmi_links');
+            return redirect()->route('admin.spmi_links');
         } 
         $data = Instrument::get();
-        return view('settings.spmi_links_add', compact('data'));
+        return view('admin.spmi.spmi_links_add', compact('data'));
     }
 
     public function spmi_links_delete(Request $request) { 
@@ -480,7 +480,7 @@ class SettingController extends Controller
     }
 
     public function publication(Request $request) {
-        return view('settings.publication');
+        return view('admin.publications.publication');
     }
 
     public function publication_add(Request $request) {
@@ -496,10 +496,10 @@ class SettingController extends Controller
                     'updated_at' => now(),
                 ]
             );
-            return redirect()->route('settings.publication');
+            return redirect()->route('admin.publication');
         } 
         $data = Publication::get();
-        return view('settings.publication_add', compact('data'));
+        return view('admin.publications.publication_add', compact('data'));
     }
 
     public function publication_delete(Request $request) { 

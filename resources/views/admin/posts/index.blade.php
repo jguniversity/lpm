@@ -41,11 +41,10 @@
 @endsection
 
 @section('breadcrumb-title')
-<h3>@yield('title')</h3>
 @endsection
 
 @section('breadcrumb-items')
-<li class="breadcrumb-item">Content</li>
+<li class="breadcrumb-item">Admin</li>
 <li class="breadcrumb-item active">@yield('title')</li>
 @endsection
 

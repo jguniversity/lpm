@@ -39,16 +39,17 @@ Route::middleware(['auth', 'role:AD'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
-
         Route::post('posts/upload-image', [PostController::class, 'uploadImage'])
             ->name('posts.upload-image');
-
-        // Khusus upload melalui dialog CKEditor
         Route::post('posts/upload-image-dialog', [PostController::class, 'uploadImageDialog'])
             ->name('posts.upload-image-dialog');
-
         Route::resource('posts', PostController::class);
-
+        Route::get('publication', [App\Http\Controllers\SettingController::class, 'publication'])->name('publication');
+        Route::any('publication/add', [App\Http\Controllers\SettingController::class, 'publication_add'])->name('publication_add');
+        Route::delete('publication/delete', [App\Http\Controllers\SettingController::class, 'publication_delete'])->name('publication_delete');
+        Route::get('spmi_links', [App\Http\Controllers\SettingController::class, 'spmi_links'])->name('spmi_links');
+        Route::any('spmi_links/add', [App\Http\Controllers\SettingController::class, 'spmi_links_add'])->name('spmi_links_add');
+        Route::delete('spmi_links/delete', [App\Http\Controllers\SettingController::class, 'spmi_links_delete'])->name('spmi_links_delete');
     });
 
 Route::get('/',[App\Http\Controllers\HomeController::class, 'index'])->name('index');
@@ -68,6 +69,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('update-password', [App\Http\Controllers\DashboardController::class, 'update_password'])->name('update_password');
     Route::any('update-account', [App\Http\Controllers\DashboardController::class, 'update_account'])->name('update_account');
 });
+
 //SETTINGS ROLE ADMIN
 Route::group(['prefix' => 'settings', 'middleware' => ['auth', 'role:AD']], function() {
     Route::any('general', [App\Http\Controllers\SettingController::class, 'general'])->name('settings.general');
@@ -89,14 +91,6 @@ Route::group(['prefix' => 'settings', 'middleware' => ['auth', 'role:AD']], func
     Route::any('study_program/add', [App\Http\Controllers\SettingController::class, 'study_program_add'])->name('settings.study_program_add');
     Route::any('study_program/edit/{id}', [App\Http\Controllers\SettingController::class, 'study_program_edit'])->name('settings.study_program_edit');
     Route::delete('study_program/delete', [App\Http\Controllers\SettingController::class, 'study_program_delete'])->name('settings.study_program_delete');
-
-    Route::get('spmi_links', [App\Http\Controllers\SettingController::class, 'spmi_links'])->name('settings.spmi_links');
-    Route::any('spmi_links/add', [App\Http\Controllers\SettingController::class, 'spmi_links_add'])->name('settings.spmi_links_add');
-    Route::delete('spmi_links/delete', [App\Http\Controllers\SettingController::class, 'spmi_links_delete'])->name('settings.spmi_links_delete');
-
-    Route::get('publication', [App\Http\Controllers\SettingController::class, 'publication'])->name('settings.publication');
-    Route::any('publication/add', [App\Http\Controllers\SettingController::class, 'publication_add'])->name('settings.publication_add');
-    Route::delete('publication/delete', [App\Http\Controllers\SettingController::class, 'publication_delete'])->name('settings.publication_delete');
 });
 //SCHEDULES ROLE ADMIN
 Route::group(['prefix' => 'schedules', 'middleware' => ['auth', 'role:AD']], function() {

@@ -2,7 +2,7 @@
     <div>
         <div class="logo-wrapper">
             <a href="{{ url('/') }}"><img class="img-fluid for-light" src="{{asset('assets/images/logo_po.png')}}"
-                    alt="" style="height: 50px;"><img class="img-fluid for-dark"
+                    alt="" style="height: 40px;"><img class="img-fluid for-dark"
                     src="{{asset('assets/images/logo_po.png')}}" alt="" style="height: 50px;"></a>
             <div class="back-btn"><i class="fa fa-angle-left"></i></div>
             <div class="toggle-sidebar" id="toggle-sidebar-desktop"><i class="status_toggle middle sidebar-toggle" data-feather="grid"> </i></div>
@@ -19,11 +19,7 @@
                         <div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2"
                                 aria-hidden="true"></i></div>
                     </li>
-                    <li class="sidebar-main-title">
-                        <div>
-                            <h6 class="lan-1">Menu</h6>
-                        </div>
-                    </li>
+
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='dashboard' ? 'active' : '' }} "
                             href="{{route('dashboard')}}">
@@ -31,14 +27,67 @@
                         </a>
                     </li>
                     @if(Auth::user()->hasRole('AD'))
+                    <li class="sidebar-main-title">
+                        <div>
+                            <h6 class="lan-1">Admin Menu</h6>
+                        </div>
+                    </li>
                     <li class="sidebar-list">
                     <label class="badge rounded-pill badge-primary" title="News"></label>
                         <a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.posts.index' ? 'active' : '' }} "
                             href="{{ route('admin.posts.index') }}">
-                            <i data-feather="edit"> </i><span>News</span>
+                            <i data-feather="edit"> </i><span>Posts</span>
                         </a>
                     </li>
+                    <li class="sidebar-list">
+                    <label class="badge rounded-pill badge-primary" title="Publications"></label>
+                        <a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.publication' ? 'active' : '' }} "
+                            href="{{ route('admin.publication') }}">
+                            <i data-feather="archive"> </i><span>Publications</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list">
+                    <label class="badge rounded-pill badge-primary" title="SPMI"></label>
+                        <a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.spmi_links' ? 'active' : '' }} "
+                            href="{{ route('admin.spmi_links') }}">
+                            <i data-feather="link"> </i><span>SPMI Links</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list">
+                    <label class="badge rounded-pill badge-primary" id="notif_mypo" title="Observation Task"></label>
+                        <a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='development' ? 'active' : '' }} "
+                            href="{{route('development')}}">
+                            <i data-feather="codepen"> </i><span>Development Plan</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/settings' ? 'active' : '' }}"
+                            href="#"><i data-feather="settings"></i><span class="lan-3">settings</span>
+                            <div class="according-menu"><i
+                                    class="fa fa-angle-{{request()->route()->getPrefix() == '/settings' ? 'down' : 'right' }}"></i>
+                            </div>
+                        </a>
+                        <ul class="sidebar-submenu"
+                            style="display: {{ request()->route()->getPrefix() == '/settings' ? 'block;' : 'none;' }}">
+                            <li><a class="lan-4 {{ Route::currentRouteName()=='settings.users' ? 'active' : '' }}"
+                                    href="{{route('settings.users')}}">Manage Users</a></li>
+                            <li><a class="lan-4 {{ Route::currentRouteName()=='settings.general' ? 'active' : '' }}"
+                                    href="{{route('settings.general')}}">General Setting</a></li>
+                            <li><a class="lan-4 {{ Route::currentRouteName()=='settings.study_program' ? 'active' : '' }}"
+                                    href="{{route('settings.study_program')}}">Study Programs</a></li>
+                            <li><a class="lan-4 {{ Route::currentRouteName()=='settings.categories' ? 'active' : '' }}"
+                                    href="{{route('settings.categories')}}">Assessment Categories</a></li>
+                            <li><a class="lan-4 {{ Route::currentRouteName()=='settings.criterias' ? 'active' : '' }}"
+                                    href="{{route('settings.criterias')}}">Assessment Criteria</a></li>
+                        </ul>
+                    </li>
                     @endif
+                    <li class="sidebar-main-title">
+                        <div>
+                            <h6 class="lan-1">PO Menu</h6>
+                        </div>
+                    </li>
                     @if(Auth::user()->hasRole('AD'))
                     <li class="sidebar-list">
                     <label class="badge rounded-pill badge-primary" id="notif_schedules" title="Review Task"></label>
@@ -82,41 +131,8 @@
                             <i data-feather="pie-chart"> </i><span>Result recap</span>
                         </a>
                     </li>
-                    <li class="sidebar-list">
-                        <a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/settings' ? 'active' : '' }}"
-                            href="#"><i data-feather="settings"></i><span class="lan-3">settings</span>
-                            <div class="according-menu"><i
-                                    class="fa fa-angle-{{request()->route()->getPrefix() == '/settings' ? 'down' : 'right' }}"></i>
-                            </div>
-                        </a>
-                        <ul class="sidebar-submenu"
-                            style="display: {{ request()->route()->getPrefix() == '/settings' ? 'block;' : 'none;' }}">
-                            <li><a class="lan-4 {{ Route::currentRouteName()=='settings.users' ? 'active' : '' }}"
-                                    href="{{route('settings.users')}}">Manage Users</a></li>
-                            <li><a class="lan-4 {{ Route::currentRouteName()=='settings.categories' ? 'active' : '' }}"
-                                    href="{{route('settings.categories')}}">Assessment Categories</a></li>
-                            <li><a class="lan-4 {{ Route::currentRouteName()=='settings.criterias' ? 'active' : '' }}"
-                                    href="{{route('settings.criterias')}}">Assessment Criteria</a></li>
-                            <li><a class="lan-4 {{ Route::currentRouteName()=='settings.general' ? 'active' : '' }}"
-                                    href="{{route('settings.general')}}">General Setting</a></li>
-                            <li><a class="lan-4 {{ Route::currentRouteName()=='settings.study_program' ? 'active' : '' }}"
-                                    href="{{route('settings.study_program')}}">Study Programs</a></li>
-                            <li><a class="lan-4 {{ Route::currentRouteName()=='settings.spmi_links' ? 'active' : '' }}"
-                                    href="{{route('settings.spmi_links')}}">SPMI Links</a></li>
-                            <li><a class="lan-4 {{ Route::currentRouteName()=='settings.publication' ? 'active' : '' }}"
-                                    href="{{route('settings.publication')}}">Publications</a></li>
-                        </ul>
-                    </li>
                     @endif
-                    @if(Auth::user()->hasRole('AD') || Auth::user()->hasRole('LE'))
-                    <li class="sidebar-list">
-                    <label class="badge rounded-pill badge-primary" id="notif_mypo" title="Observation Task"></label>
-                        <a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='development' ? 'active' : '' }} "
-                            href="{{route('development')}}">
-                            <i data-feather="codepen"> </i><span>Development Plan</span>
-                        </a>
-                    </li>
-                    @endif
+
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='rubric' ? 'active' : '' }} "
                             href="{{route('rubric')}}">

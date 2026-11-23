@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'New SPMI Links')
+@section('title', 'New Publication')
 
 @section('css')
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/select2.css')}}">
@@ -16,11 +16,12 @@
 @endsection
 
 @section('breadcrumb-title')
+<!-- <h3>User Profile</h3> -->
 @endsection
 
 @section('breadcrumb-items')
-<li class="breadcrumb-item">Settings</li>
-<li class="breadcrumb-item">SPMI Links</li>
+<li class="breadcrumb-item">Admin</li>
+<li class="breadcrumb-item">Publication</li>
 <li class="breadcrumb-item active">New</li>
 @endsection
 
@@ -39,7 +40,7 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-12 col-md-12">
+                        <div class="col-lg-6 col-md-12">
                             <div class="form-group">
                                 <label class="col-form-label">Title<i class="text-danger">*</i></label>
                                 <input class="form-control @error('title') is-invalid @enderror" id="title"
@@ -51,12 +52,24 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label class="col-form-label">Year</label>
+                                <input class="form-control @error('year') is-invalid @enderror" id="year"
+                                    name="year" value="{{ old('year') }}" type=text>
+                                @error('year')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
                         <div class="col-lg-12 col-md-12">
                             <div class="form-group">
-                                <label class="col-form-label">Intrument Link<i class="text-danger">*</i></label>
-                                <input class="form-control @error('content') is-invalid @enderror" id="content"
-                                    name="content" value="{{ old('content') }}" type="url" >
-                                @error('content')
+                                <label class="col-form-label">Doc. Link<i class="text-danger">*</i></label>
+                                <input class="form-control @error('doc_link') is-invalid @enderror" id="doc_link"
+                                    name="doc_link" value="{{ old('doc_link') }}" type="url" >
+                                @error('doc_link')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
