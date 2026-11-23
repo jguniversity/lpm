@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\PostImage;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -38,8 +39,9 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::orderBy('name')->get();
+        $tags = Tag::orderBy('name')->get();
 
-        return view('admin.posts.create', compact('categories'));
+        return view('admin.posts.create', compact('categories','tags'));
     }
 
     public function uploadImage(Request $request)
@@ -172,7 +174,8 @@ class PostController extends Controller
         $post = Post::with([
             'category',
             'author',
-            'images'
+            'images',
+            'tags'
         ])->findOrFail($id);
 
         return view('admin.posts.show', compact('post'));
@@ -184,13 +187,17 @@ class PostController extends Controller
 
         $categories = Category::orderBy('name')->get();
 
+        $tags = Tag::orderBy('name')->get();
+
         return view('admin.posts.edit', compact(
             'post',
-            'categories'
+            'categories',
+            'tags'
         ));
     }
 
     // Update berita
+
     public function update(Request $request, $id)
     {
         $post = Post::findOrFail($id);
@@ -204,6 +211,8 @@ class PostController extends Controller
             'images.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'status' => 'required|in:draft,published,archived',
             'published_at' => 'nullable|date',
+            'tags' => 'nullable|array',
+            'tags.*' => 'required|string|max:255',
         ]);
 
         DB::beginTransaction();
@@ -247,6 +256,34 @@ class PostController extends Controller
 
             $post->update($data);
 
+            // Simpan Tag
+            $tagIds = [];
+
+            foreach ($request->tags ?? [] as $value) {
+
+                if (is_numeric($value)) {
+                    $tagIds[] = (int) $value;
+                } else {
+                    $name = trim($value);
+
+                    if ($name === '') {
+                        continue;
+                    }
+
+                    $slug = Str::slug($name);
+
+                    $tag = Tag::firstOrCreate(
+                        ['slug' => $slug],
+                        ['name' => $name]
+                    );
+
+                    $tagIds[] = $tag->id;
+                }
+            }
+
+            // Sinkronisasi Tag
+            $post->tags()->sync(array_unique($tagIds));
+
             // Tambahkan foto galeri baru
             if ($request->hasFile('images')) {
 
@@ -278,6 +315,7 @@ class PostController extends Controller
                 ->with('error', 'Gagal memperbarui berita: ' . $e->getMessage());
         }
     }
+
 
     // Hapus berita
     public function destroy($id)

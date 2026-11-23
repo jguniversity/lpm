@@ -2,20 +2,62 @@
 <html lang="id">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="description" content="{{ $post->excerpt ?? $post->title }}">
+    <!-- SEO Basic -->
+    <title>{{ $post->title }} | LPM Jakarta Global University</title>
+
+    <meta name="description"
+        content="{{ Str::limit(strip_tags($post->excerpt ?: $post->content), 160) }}">
+
     <meta name="author" content="LPM JGU">
+    <meta name="robots" content="index, follow">
 
-    <link rel="icon" href="{{ asset('assets/images/favicon.png') }}" type="image/x-icon">
-    <title>{{ $post->title }} - LPM JGU</title>
+    <link rel="canonical" href="{{ route('news.show', $post->slug) }}">
 
-    <link rel="icon" href="{{ asset('assets/images/favicon.png') }}">
+    <!-- Favicon -->
+    <link rel="icon" href="{{ asset('assets/images/favicon.png') }}" type="image/png">
 
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{{ $post->title }}">
+    <meta property="og:description"
+        content="{{ Str::limit(strip_tags($post->excerpt ?: $post->content), 160) }}">
+    <meta property="og:url" content="{{ route('news.show', $post->slug) }}">
+    <meta property="og:site_name" content="LPM Jakarta Global University">
+
+    @if($post->thumbnail)
+    <meta property="og:image" content="{{ asset('storage/' . $post->thumbnail) }}">
+    @endif
+
+    <meta property="article:published_time"
+        content="{{ optional($post->published_at)->toIso8601String() }}">
+
+    @if($post->category)
+    <meta property="article:section" content="{{ $post->category->name }}">
+    @endif
+
+    @foreach($post->tags as $tag)
+    <meta property="article:tag" content="{{ $tag->name }}">
+    @endforeach
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $post->title }}">
+    <meta name="twitter:description"
+        content="{{ Str::limit(strip_tags($post->excerpt ?: $post->content), 160) }}">
+
+    @if($post->thumbnail)
+    <meta name="twitter:image" content="{{ asset('storage/' . $post->thumbnail) }}">
+    @endif
+
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+
 
     @include('layouts.css')
     @yield('style')
@@ -74,6 +116,17 @@
             object-fit: cover;
             border-radius: 8px;
             margin-bottom: 30px;
+        }
+
+        .post-excerpt {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #555;
+            font-style: italic;
+            padding: 15px 20px;
+            border-left: 4px solid #7366ff;
+            background: #f8f8fc;
+            margin-bottom: 25px;
         }
 
         .post-content {
@@ -158,6 +211,43 @@
         }
 
     </style>
+
+    <!-- Schema.org NewsArticle -->
+    <script type="application/ld+json">
+    {
+        "@@context": "https://schema.org",
+        "@@type": "NewsArticle",
+        "mainEntityOfPage": {
+            "@@type": "WebPage",
+            "@@id": "{{ route('news.show', $post->slug) }}"
+        },
+        "headline": @json($post->title),
+        "description": @json(Str::limit(strip_tags($post->excerpt ?: $post->content), 160)),
+        "image": [
+            @if($post->thumbnail)
+                @json(asset('storage/' . $post->thumbnail))
+            @else
+                @json(asset('assets/images/blog/blog-7.jpg'))
+            @endif
+        ],
+        "datePublished": "{{ optional($post->published_at)->toIso8601String() }}",
+        "dateModified": "{{ optional($post->updated_at)->toIso8601String() }}",
+        "author": {
+            "@@type": "Organization",
+            "name": "LPM JGU",
+            "url": "{{ url('/') }}"
+        },
+        "publisher": {
+            "@@type": "Organization",
+            "name": "Lembaga Penjaminan Mutu Jakarta Global University",
+            "logo": {
+                "@@type": "ImageObject",
+                "url": "{{ asset('assets/images/logo-white.png') }}"
+            }
+        }
+    }
+    </script>
+
 </head>
 
 <body>
@@ -210,7 +300,7 @@
 
                                 <span>
                                     <i class="fa fa-eye"></i>
-                                    {{ number_format($post->views, 0, ',', '.') }} kali dibaca
+                                    {{ number_format($post->views, 0, ',', '.') }} kali dilihat
                                 </span>
 
                                 <span class="mx-3">
@@ -219,17 +309,28 @@
                                 </span>
                             </div>
                             <hr>
+                            {{-- Excerpt --}}
                             @if($post->excerpt)
-                            <div class="mb-4">
-                                <p class="text-muted">
-                                    <strong>{{ $post->excerpt }}</strong>
-                                </p>
+                            <div class="post-excerpt">
+                                {{ $post->excerpt }}
                             </div>
                             @endif
 
                             <div class="post-content">
                                 {!! $post->content !!}
                             </div>
+
+                            @if ($post->tags->isNotEmpty())
+                                <div class="post-tags mt-3 mb-3">
+                                    <strong>Tags:</strong>
+
+                                    @foreach ($post->tags as $tag)
+                                        <span class="badge badge-primary">
+                                            #{{ $tag->name }}
+                                        </span>
+                                    @endforeach
+                                </div>
+                            @endif
 
                             <!-- PHOTO GALLERY -->
                             @if($post->images->count())

@@ -306,6 +306,23 @@
                         </div>
                     </div>
 
+                    <hr>
+
+                    <div class="mb-0">
+                        <div class="post-info-label">Tags</div>
+                            @if ($post->tags->count() > 0)
+                                <div class="post-tags mb-3">
+                                    @foreach ($post->tags as $tag)
+                                        <a href="{{ route('news.index', ['tag' => $tag->slug]) }}"
+                                        class="badge badge-dark mr-1">
+                                            #{{ $tag->name }}
+                                        </a>
+                                    @endforeach
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
                 </div>
             </div>
 

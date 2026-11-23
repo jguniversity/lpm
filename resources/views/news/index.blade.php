@@ -215,7 +215,7 @@
                                     <i class="fa fa-calendar"></i>
                                     {{ $post->published_at->translatedFormat('d F Y') }}
                                     <i class="fa fa-eye"></i>
-                                    {{ number_format($post->views, 0, ',', '.') }} kali dibaca
+                                    {{ number_format($post->views, 0, ',', '.') }} kali dilihat
                                     <i class="fa fa-user"></i>
                                     {{ $post->author->name ?? 'LPM JGU' }}
                                 </div>

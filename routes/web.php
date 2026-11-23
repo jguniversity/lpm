@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\PostController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Jenssegers\Date\Date;
+use App\Models\Post;
 
 /*
 |--------------------------------------------------------------------------
@@ -186,3 +187,17 @@ Route::get('/rencana-pengembangan', [DevelopmentController::class, 'dev'])->name
 Route::get('update-dosen', [App\Http\Controllers\ApiController::class, 'update_dosen'])->middleware(['auth', 'role:AD']);
 //log-viewers
 Route::get('log-viewers', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->middleware(['auth', 'role:AD']);
+
+Route::get('/sitemap.xml', function () {
+
+    $posts = Post::where('status', 'published')
+        ->whereNotNull('published_at')
+        ->where('published_at', '<=', now())
+        ->orderBy('published_at', 'desc')
+        ->get();
+
+    return response()
+        ->view('sitemap', compact('posts'))
+        ->header('Content-Type', 'application/xml');
+
+})->name('sitemap');

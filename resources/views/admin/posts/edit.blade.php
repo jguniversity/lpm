@@ -203,6 +203,31 @@
                                 @enderror
                             </div>
 
+                            <div class="form-group">
+                                <label class="col-form-label">Tags</label>
+
+                                <select name="tags[]" id="tags"
+                                    class="form-control select2"
+                                    multiple="multiple">
+
+                                    @foreach ($tags as $tag)
+                                        <option value="{{ $tag->id }}"
+                                            {{ $post->tags->contains('id', $tag->id) ? 'selected' : '' }}>
+                                            {{ $tag->name }}
+                                        </option>
+                                    @endforeach
+
+                                </select>
+
+                                <small class="text-muted">
+                                    Pilih satu atau beberapa tag untuk berita ini.
+                                </small>
+
+                                @error('tags')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+
                             {{-- Thumbnail --}}
                             <div class="form-group">
                                 <label class="col-form-label">
@@ -461,6 +486,13 @@
         if (typeof feather !== 'undefined') {
             feather.replace();
         }
+
+        $('#tags').select2({
+            placeholder: 'Pilih atau ketik tag berita',
+            width: '100%',
+            tags: true,
+            tokenSeparators: [',']
+        });
 
     });
 </script>

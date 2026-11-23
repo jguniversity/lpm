@@ -40,7 +40,12 @@ class NewsController extends Controller
     // Detail berita publik
     public function show($slug)
     {
-        $post = Post::with(['category', 'author', 'images'])
+        $post = Post::with([
+            'category',
+            'author',
+            'images',
+            'tags'
+        ])
             ->where('status', 'published')
             ->whereNotNull('published_at')
             ->where('published_at', '<=', now())
@@ -50,7 +55,9 @@ class NewsController extends Controller
         // Tambahkan jumlah pembaca
         $post->increment('views');
 
-        $latestPosts = Post::where('status', 'published')
+        // Berita terbaru
+        $latestPosts = Post::with(['category', 'author'])
+            ->where('status', 'published')
             ->whereNotNull('published_at')
             ->where('published_at', '<=', now())
             ->where('id', '!=', $post->id)
@@ -58,14 +65,47 @@ class NewsController extends Controller
             ->take(5)
             ->get();
 
-        $relatedPosts = Post::where('status', 'published')
-            ->where('category_id', $post->category_id)
-            ->where('id', '!=', $post->id)
-            ->whereNotNull('published_at')
-            ->where('published_at', '<=', now())
-            ->latest('published_at')
-            ->take(3)
-            ->get();
+        // Ambil ID Tag dari berita yang sedang dibuka
+        $tagIds = $post->tags->pluck('id');
+
+        // Berita terkait berdasarkan Tag
+        $relatedPosts = collect();
+
+        if ($tagIds->isNotEmpty()) {
+            $relatedPosts = Post::with([
+                'category',
+                'author',
+                'tags'
+            ])
+                ->where('status', 'published')
+                ->whereNotNull('published_at')
+                ->where('published_at', '<=', now())
+                ->where('id', '!=', $post->id)
+                ->whereHas('tags', function ($query) use ($tagIds) {
+                    $query->whereIn('tags.id', $tagIds);
+                })
+                ->orderBy('published_at', 'desc')
+                ->take(3)
+                ->get();
+        }
+
+        // Jika tidak ada berita dengan Tag yang sama,
+        // cari berita berdasarkan kategori
+        if ($relatedPosts->isEmpty() && $post->category_id) {
+            $relatedPosts = Post::with([
+                'category',
+                'author',
+                'tags'
+            ])
+                ->where('status', 'published')
+                ->whereNotNull('published_at')
+                ->where('published_at', '<=', now())
+                ->where('category_id', $post->category_id)
+                ->where('id', '!=', $post->id)
+                ->orderBy('published_at', 'desc')
+                ->take(3)
+                ->get();
+        }
 
         return view('news.detail', compact(
             'post',
@@ -73,4 +113,5 @@ class NewsController extends Controller
             'relatedPosts'
         ));
     }
+
 }
