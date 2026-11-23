@@ -2,17 +2,48 @@
 <html lang="id">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berita - LPM JGU</title>
 
-    <link rel="icon" href="{{ asset('assets/images/favicon.png') }}" type="image/x-icon">
-    <meta name="description" content="Informasi dan berita terbaru LPM Jakarta Global University.">
+    <!-- SEO Basic -->
+    <title>Berita dan Informasi | LPM Jakarta Global University</title>
 
+    <meta name="description"
+        content="Informasi, berita, kegiatan, penelitian, dan publikasi terbaru dari Lembaga Penjaminan Mutu Jakarta Global University.">
+
+    <meta name="author" content="LPM JGU">
+    <meta name="robots" content="index, follow">
+
+    <link rel="canonical" href="{{ route('news.index') }}">
+
+    <!-- Favicon -->
+    <link rel="icon" href="{{ asset('assets/images/favicon.png') }}" type="image/png">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Berita dan Informasi | LPM Jakarta Global University">
+    <meta property="og:description"
+        content="Informasi, berita, kegiatan, penelitian, dan publikasi terbaru dari Jakarta Global University.">
+    <meta property="og:url" content="{{ route('news.index') }}">
+    <meta property="og:site_name" content="LPM Jakarta Global University">
+    <meta property="og:image" content="{{ asset('assets/images/logo-white.png') }}">
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Berita dan Informasi | LPM JGU">
+    <meta name="twitter:description"
+        content="Informasi dan berita terbaru Lembaga Penjaminan Mutu Jakarta Global University.">
+    <meta name="twitter:image" content="{{ asset('assets/images/logo-white.png') }}">
+
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link
         href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap"
         rel="stylesheet">
+
 
     @include('layouts.css')
 
@@ -194,17 +225,16 @@
                     <div class="col-md-6 col-lg-4">
 
                         <div class="news-card">
-
                             <a href="{{ route('news.show', $post->slug) }}">
-                                @if($post->thumbnail)
-                                <img src="{{ asset('storage/' . $post->thumbnail) }}" class="news-image"
-                                    alt="{{ $post->title }}">
-                                @else
-                                <img src="{{ asset('assets/images/landing/screen2.jpg') }}" class="news-image"
-                                    alt="{{ $post->title }}">
-                                @endif
+                                <img
+                                    src="{{ $post->thumbnail
+                                        ? asset('storage/' . $post->thumbnail)
+                                        : asset('assets/images/landing/screen2.jpg') }}"
+                                    class="news-image"
+                                    alt="{{ $post->title }}"
+                                    loading="lazy"
+                                    decoding="async">
                             </a>
-
                             <div class="news-body">
 
                                 <div class="news-category">
