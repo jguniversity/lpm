@@ -131,6 +131,14 @@
                     <h4 class="card-title mb-0">Post Detail</h4>
 
                     <div>
+                        @if($post->status == 'published' && $post->published_at && $post->published_at <= now())
+                            <a href="{{ route('news.show', $post->slug) }}"
+                                target="_blank"
+                                class="btn btn-success btn-sm">
+                                <i class="fa fa-external-link"></i>
+                                Lihat Berita Publik
+                            </a>
+                        @endif
                         <a href="{{ route('admin.posts.edit', $post->id) }}" class="btn btn-primary btn-sm">
                             <i class="fa fa-edit"></i> Edit Post
                         </a>

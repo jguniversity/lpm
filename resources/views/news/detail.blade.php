@@ -277,12 +277,6 @@
                     <div class="col-lg-8 mb-4">
 
                         <article class="news-card">
-
-                            @if($post->thumbnail)
-                            <img src="{{ asset('storage/' . $post->thumbnail) }}" class="news-thumbnail"
-                                alt="{{ $post->title }}">
-                            @endif
-
                             <h1 class="news-title">
                                 {{ $post->title }}
                             </h1>
@@ -361,6 +355,10 @@
 
                     <!-- SIDEBAR -->
                     <div class="col-lg-4">
+                        @if($post->thumbnail)
+                            <img src="{{ asset('storage/' . $post->thumbnail) }}" class="news-thumbnail"
+                                alt="{{ $post->title }}">
+                            @endif
 
                         <div class="news-sidebar">
 
