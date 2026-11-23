@@ -28,9 +28,7 @@
                     </li>
                     @if(Auth::user()->hasRole('AD'))
                     <li class="sidebar-main-title">
-                        <div>
-                            <h6 class="lan-1">Admin Menu</h6>
-                        </div>
+                        <h6 class="lan-1">Admin Menu</h6>
                     </li>
                     <li class="sidebar-list">
                     <label class="badge rounded-pill badge-primary" title="News"></label>
@@ -84,9 +82,7 @@
                     </li>
                     @endif
                     <li class="sidebar-main-title">
-                        <div>
-                            <h6 class="lan-1">PO Menu</h6>
-                        </div>
+                        <h6 class="lan-1">PO Menu</h6>
                     </li>
                     @if(Auth::user()->hasRole('AD'))
                     <li class="sidebar-list">

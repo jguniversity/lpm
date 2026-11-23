@@ -362,7 +362,7 @@
                                     onclick="copyNewsLink()"
                                     class="btn btn-light btn-sm"
                                     title="Salin link berita">
-                                    <i class="fa fa-link"></i> Salin Link
+                                    <i class="fa fa-link"></i> Link
                                 </button>
                             </div>
 
@@ -398,7 +398,7 @@
                         @if($post->thumbnail)
                             <img src="{{ asset('storage/' . $post->thumbnail) }}" class="news-thumbnail"
                                 alt="{{ $post->title }}">
-                            @endif
+                        @endif
 
                         <div class="news-sidebar">
 
@@ -434,10 +434,12 @@
                             @endforelse
 
                         </div>
-                        <a href="{{ route('news.index') }}#news" class="btn btn-outline-secondary btn-pill my-4">
-                            <i class="fa fa-arrow-left"></i>
-                            Kembali ke Berita
-                        </a>
+                        <div class="text-end">
+                            <a href="{{ route('news.index') }}#news" class="btn btn-outline-secondary btn-pill my-4  text-end">
+                                <i class="fa fa-arrow-left"></i>
+                                Kembali ke Berita
+                            </a>
+                        </div>
 
                     </div>
 
