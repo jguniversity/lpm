@@ -282,22 +282,22 @@
                             </h1>
 
                             <div class="news-meta">
-                                <span>
+                                <span class="me-3">
                                     <i class="fa fa-calendar"></i>
                                     {{ $post->published_at->translatedFormat('d F Y') }}
                                 </span>
 
-                                <span class="mx-3">
+                                <span class="me-3">
                                     <i class="fa fa-folder"></i>
                                     {{ $post->category->name ?? 'Berita' }}
                                 </span>
 
-                                <span>
+                                <span class="me-3">
                                     <i class="fa fa-eye"></i>
                                     {{ number_format($post->views, 0, ',', '.') }} kali dilihat
                                 </span>
 
-                                <span class="mx-3">
+                                <span class="me-3">
                                     <i class="fa fa-user"></i>
                                     {{ $post->author->name ?? 'LPM JGU' }}
                                 </span>
@@ -325,6 +325,46 @@
                                     @endforeach
                                 </div>
                             @endif
+
+                            <div class="news-share mt-3 mb-4">
+                                <span class="me-2 fw-bold">Bagikan:</span>
+
+                                @php
+                                    $shareUrl = route('news.show', $post->slug);
+                                    $shareTitle = $post->title;
+                                @endphp
+
+                                <a href="https://wa.me/?text={{ urlencode($shareTitle . ' ' . $shareUrl) }}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="btn btn-success btn-sm me-1"
+                                    title="Bagikan ke WhatsApp">
+                                    <i class="fa fa-whatsapp"></i>
+                                </a>
+
+                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($shareUrl) }}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="btn btn-sm me-1"
+                                    title="Bagikan ke Facebook" style="background-color: blue; color:white">
+                                    <i class="fa fa-facebook"></i>
+                                </a>
+
+                                <a href="https://twitter.com/intent/tweet?text={{ urlencode($shareTitle) }}&url={{ urlencode($shareUrl) }}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="btn btn-dark btn-sm me-1"
+                                    title="Bagikan ke X">
+                                    <i class="fa fa-twitter"></i>
+                                </a>
+
+                                <button type="button"
+                                    onclick="copyNewsLink()"
+                                    class="btn btn-light btn-sm"
+                                    title="Salin link berita">
+                                    <i class="fa fa-link"></i> Salin Link
+                                </button>
+                            </div>
 
                             <!-- PHOTO GALLERY -->
                             @if($post->images->count())
@@ -476,6 +516,19 @@
     <script src="{{ asset('assets/js/icons/feather-icon/feather.min.js') }}"></script>
     <script src="{{ asset('assets/js/config.js') }}"></script>
     <script src="{{ asset('assets/js/script2.js') }}"></script>
+
+    <script>
+        function copyNewsLink() {
+            const url = "{{ route('news.show', $post->slug) }}";
+
+            navigator.clipboard.writeText(url).then(function () {
+                alert('Link berita berhasil disalin!');
+            }).catch(function () {
+                alert('Gagal menyalin link berita.');
+            });
+        }
+    </script>
+
 
 </body>
 

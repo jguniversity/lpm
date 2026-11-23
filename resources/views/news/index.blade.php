@@ -238,16 +238,23 @@
                             <div class="news-body">
 
                                 <div class="news-category">
+                                    <i class="fa fa-folder"></i>
                                     {{ $post->category->name ?? 'Berita' }}
                                 </div>
 
                                 <div class="news-date">
+                                    <span class="me-2">
                                     <i class="fa fa-calendar"></i>
                                     {{ $post->published_at->translatedFormat('d F Y') }}
+                                    </span>
+                                    <span class="me-2">
                                     <i class="fa fa-eye"></i>
                                     {{ number_format($post->views, 0, ',', '.') }} kali dilihat
+                                    </span>
+                                    <span class="me-2">
                                     <i class="fa fa-user"></i>
                                     {{ $post->author->name ?? 'LPM JGU' }}
+                                    </span>
                                 </div>
 
                                 <h5 class="news-title">
