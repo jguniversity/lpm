@@ -203,6 +203,7 @@ class PostController extends Controller
             'thumbnail' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'images.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'status' => 'required|in:draft,published,archived',
+            'published_at' => 'nullable|date',
         ]);
 
         DB::beginTransaction();
@@ -216,7 +217,9 @@ class PostController extends Controller
                 'content' => $request->content,
                 'status' => $request->status,
                 'published_at' => $request->status == 'published'
-                    ? ($post->published_at ?? now())
+                    ? ($request->filled('published_at')
+                        ? $request->published_at
+                        : ($post->published_at ?? now()))
                     : null,
             ];
 

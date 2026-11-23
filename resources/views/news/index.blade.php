@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +10,9 @@
     <meta name="description" content="Informasi dan berita terbaru LPM Jakarta Global University.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
 
     @include('layouts.css')
 
@@ -38,13 +40,13 @@
             border-radius: 10px;
             overflow: hidden;
             height: 100%;
-            box-shadow: 0 2px 12px rgba(0,0,0,.05);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, .05);
             transition: .3s;
         }
 
         .news-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 20px rgba(0,0,0,.10);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, .10);
         }
 
         .news-image {
@@ -111,7 +113,7 @@
             padding: 20px;
             border-radius: 10px;
             margin-bottom: 30px;
-            box-shadow: 0 2px 12px rgba(0,0,0,.04);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, .04);
         }
 
         .news-filter .form-control,
@@ -140,65 +142,54 @@
                 height: 200px;
             }
         }
+
     </style>
 </head>
 
 <body>
 
-<div class="page-wrapper">
+    <div class="page-wrapper">
+        @include('layouts.master-nav-menu')
+        <section class="news-page mt-4" style="min-height: 90vh">
 
-    <section class="news-page">
-        <div class="container">
+            <div class="container mt-5">
 
-            {{-- Judul halaman --}}
-            <div class="news-heading text-center">
-                <h2>Berita LPM JGU</h2>
-                <p class="text-muted">
-                    Informasi, kegiatan, dan berita terbaru Jakarta Global University.
-                </p>
-            </div>
+                {{-- Filter dan pencarian --}}
+                <div class="news-filter">
+                    <form action="{{ route('news.index') }}" method="GET">
+                        <div class="row g-3">
 
-            {{-- Filter dan pencarian --}}
-            <div class="news-filter">
-                <form action="{{ route('news.index') }}" method="GET">
-                    <div class="row g-3">
+                            <div class="col-md-6">
+                                <input type="text" name="search" class="form-control" placeholder="Cari berita..."
+                                    value="{{ request('search') }}">
+                            </div>
 
-                        <div class="col-md-6">
-                            <input
-                                type="text"
-                                name="search"
-                                class="form-control"
-                                placeholder="Cari berita..."
-                                value="{{ request('search') }}">
-                        </div>
-
-                        <div class="col-md-4">
-                            <select name="category" class="form-select">
-                                <option value="">Semua Kategori</option>
-                                @foreach($categories as $category)
-                                    <option
-                                        value="{{ $category->slug }}"
+                            <div class="col-md-4">
+                                <select name="category" class="form-select">
+                                    <option value="">Semua Kategori</option>
+                                    @foreach($categories as $category)
+                                    <option value="{{ $category->slug }}"
                                         {{ request('category') == $category->slug ? 'selected' : '' }}>
                                         {{ $category->name }}
                                     </option>
-                                @endforeach
-                            </select>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-danger w-100">
+                                    <i class="fa fa-search"></i> Cari
+                                </button>
+                            </div>
+
                         </div>
+                    </form>
+                </div>
 
-                        <div class="col-md-2">
-                            <button type="submit" class="btn btn-danger w-100">
-                                <i class="fa fa-search"></i> Cari
-                            </button>
-                        </div>
+                {{-- Daftar berita --}}
+                <div class="row g-4 justify-content-center">
 
-                    </div>
-                </form>
-            </div>
-
-            {{-- Daftar berita --}}
-            <div class="row g-4">
-
-                @forelse($posts as $post)
+                    @forelse($posts as $post)
 
                     <div class="col-md-6 col-lg-4">
 
@@ -206,15 +197,11 @@
 
                             <a href="{{ route('news.show', $post->slug) }}">
                                 @if($post->thumbnail)
-                                    <img
-                                        src="{{ asset('storage/' . $post->thumbnail) }}"
-                                        class="news-image"
-                                        alt="{{ $post->title }}">
+                                <img src="{{ asset('storage/' . $post->thumbnail) }}" class="news-image"
+                                    alt="{{ $post->title }}">
                                 @else
-                                    <img
-                                        src="{{ asset('assets/images/landing/screen2.jpg') }}"
-                                        class="news-image"
-                                        alt="{{ $post->title }}">
+                                <img src="{{ asset('assets/images/landing/screen2.jpg') }}" class="news-image"
+                                    alt="{{ $post->title }}">
                                 @endif
                             </a>
 
@@ -227,6 +214,10 @@
                                 <div class="news-date">
                                     <i class="fa fa-calendar"></i>
                                     {{ $post->published_at->translatedFormat('d F Y') }}
+                                    <i class="fa fa-eye"></i>
+                                    {{ number_format($post->views, 0, ',', '.') }} kali dibaca
+                                    <i class="fa fa-user"></i>
+                                    {{ $post->author->name ?? 'LPM JGU' }}
                                 </div>
 
                                 <h5 class="news-title">
@@ -235,21 +226,21 @@
                                     </a>
                                 </h5>
 
-                                <p class="news-excerpt">
+                                <small class="news-excerpt">
                                     {{ \Illuminate\Support\Str::limit($post->excerpt ?: strip_tags($post->content), 120) }}
-                                </p>
+                                </small>
 
-                                <a href="{{ route('news.show', $post->slug) }}" class="news-readmore">
-                                    Baca Selengkapnya
-                                    <i class="fa fa-arrow-right"></i>
-                                </a>
+                                {{-- <a href="{{ route('news.show', $post->slug) }}" class="news-readmore">
+                                Baca Selengkapnya
+                                <i class="fa fa-arrow-right"></i>
+                                </a> --}}
 
                             </div>
                         </div>
 
                     </div>
 
-                @empty
+                    @empty
 
                     <div class="col-12">
                         <div class="news-empty">
@@ -264,31 +255,40 @@
                         </div>
                     </div>
 
-                @endforelse
+                    @endforelse
+
+                </div>
+
+                {{-- Pagination --}}
+                <div class="mt-4">
+                    {{ $posts->links() }}
+                </div>
 
             </div>
+        </section>
+        <!-- FOOTER -->
+        <footer class="section-space bg-secondary py-4">
+            Copyright © {{ (date('Y')=="2022"?date('Y'):"2022-".date('Y')) }} made with ❤️ by <a
+                href="https://itic.jgu.ac.id">ITIC JGU</a>.<br><small
+                class="ml-4 text-center text-sm text-light sm:text-right sm:ml-0">
+                v{{ Illuminate\Foundation\Application::VERSION }}p{{ PHP_VERSION }} - All rights reserved.</small>
+        </footer>
 
-            {{-- Pagination --}}
-            <div class="mt-4">
-                {{ $posts->links() }}
-            </div>
+    </div>
 
-        </div>
-    </section>
+    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/js/icons/feather-icon/feather.min.js') }}"></script>
+    <script src="{{ asset('assets/js/config.js') }}"></script>
+    <script src="{{ asset('assets/js/script2.js') }}"></script>
 
-</div>
+    <script>
+        if (typeof feather !== 'undefined') {
+            feather.replace();
+        }
 
-<script src="{{ asset('assets/js/jquery.min.js') }}"></script>
-<script src="{{ asset('assets/js/bootstrap/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ asset('assets/js/icons/feather-icon/feather.min.js') }}"></script>
-<script src="{{ asset('assets/js/config.js') }}"></script>
-<script src="{{ asset('assets/js/script2.js') }}"></script>
-
-<script>
-    if (typeof feather !== 'undefined') {
-        feather.replace();
-    }
-</script>
+    </script>
 
 </body>
+
 </html>

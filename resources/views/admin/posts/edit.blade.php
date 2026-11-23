@@ -307,6 +307,27 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
+                                {{-- Publish Date --}}
+                                <div class="form-group mt-3">
+                                    <label class="col-form-label">
+                                        Publish Date & Time
+                                    </label>
+
+                                    <input type="datetime-local"
+                                        name="published_at"
+                                        class="form-control @error('published_at') is-invalid @enderror"
+                                        value="{{ old('published_at', optional($post->published_at)->format('Y-m-d\TH:i')) }}">
+
+                                    <small class="text-muted">
+                                        Set the publication date and time.
+                                    </small>
+
+                                    @error('published_at')
+                                        <span class="invalid-feedback">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
                             </div>
 
                             <div class="alert alert-light-info mt-3">
