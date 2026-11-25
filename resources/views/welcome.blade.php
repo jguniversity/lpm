@@ -39,23 +39,24 @@
     </ul>
     <div class="container-fluid">
         <!-- EDIT HOME MULAI DARI SINI -->
-
-        <div class="row">
-            <div class="col-xl-5 col-lg-6">
-                <div class="content ">
-                    <div class="container">
-                        <h1 class="wow fadeIn">Lembaga </h1>
-                        <h1 class="wow fadeIn">Penjaminan Mutu (LPM)</h1>
-                        <h2 class="txt-secondary wow fadeIn">Quality Assurance & Control</h2>
-                        <p class="mt-3 wow fadeIn">Jakarta Global University
-                        </p>
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-5 col-lg-6">
+                    <div class="content ">
+                        <div class="container">
+                            <h1 class="wow fadeIn">Lembaga </h1>
+                            <h1 class="wow fadeIn">Penjaminan Mutu (LPM)</h1>
+                            <h2 class="txt-secondary wow fadeIn">Quality Assurance & Control</h2>
+                            <p class="mt-3 wow fadeIn">Jakarta Global University
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-xl-7 col-lg-6">
-                <div class="wow fadeIn"><img class="screen2" style="margin-top: 10vh;"
-                        src="{{ asset('assets/images/landing/screen2.jpg') }}" alt=""></div>
+                <div class="col-xl-7 col-lg-6">
+                    <div class="wow fadeIn"><img class="screen2" style="margin-top: 10vh;"
+                            src="{{ asset('assets/images/landing/screen2.jpg') }}" alt=""></div>
+                </div>
             </div>
         </div>
         <!-- BATAS AKHIR HALAMAN HOME PALING ATAS -->
@@ -118,11 +119,10 @@
             <div class="col-sm-12 wow pulse">
                 <div class="cuba-demo-content mt50">
                     <div class="couting text-secondary">
-                        <h2>Visi & Misi</h2>
+                        <h2>Visi</h2>
                     </div>
                 </div>
                 <div class="media-body"></div>
-                <h3>Visi</h3>
                 <div class="card-body new-update pt-0">
                     <div class="activity-timeline">
                         <div class="media">
@@ -136,8 +136,12 @@
                     </div>
                 </div>
             </div>
-            <div class="text-left">
-                <h3>Misi</h3>
+            <div class="text-left mt-5">
+                <div class="cuba-demo-content mt50">
+                    <div class="couting text-secondary">
+                        <h2>Misi</h2>
+                    </div>
+                </div>
                 <div class="media">
                     <div class="activity-dot-dark mx-2 d-none d-lg-block"></div>
                     <div class="media"><span>Menyusun, menerapkan, dan melakukan perbaikan secara
