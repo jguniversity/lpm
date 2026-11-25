@@ -183,15 +183,13 @@ Route::get('update-dosen', [App\Http\Controllers\ApiController::class, 'update_d
 Route::get('log-viewers', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->middleware(['auth', 'role:AD']);
 
 Route::get('/sitemap.xml', function () {
-
-    $posts = Post::where('status', 'published')
+    $posts = Post::query()
+        ->where('status', 'published')
         ->whereNotNull('published_at')
         ->where('published_at', '<=', now())
-        ->orderBy('published_at', 'desc')
+        ->orderByDesc('published_at')
         ->get();
-
     return response()
         ->view('sitemap', compact('posts'))
-        ->header('Content-Type', 'application/xml');
-
+        ->header('Content-Type', 'application/xml; charset=UTF-8');
 })->name('sitemap');
