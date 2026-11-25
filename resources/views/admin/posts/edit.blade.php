@@ -219,7 +219,7 @@
                                 </select>
 
                                 <small class="text-muted">
-                                    Pilih satu atau beberapa tag untuk berita ini.
+                                    Select one or more tags for this news item.
                                 </small>
 
                                 @error('tags')
@@ -227,6 +227,7 @@
                                 @enderror
                             </div>
 
+                            <hr>
                             {{-- Thumbnail --}}
                             <div class="form-group">
                                 <label class="col-form-label">
@@ -267,8 +268,6 @@
                                     style="display:none;">
                                 @endif
                             </div>
-
-                            <hr>
 
                             {{-- Gallery --}}
                             <div class="form-group">
@@ -487,7 +486,7 @@
         }
 
         $('#tags').select2({
-            placeholder: 'Pilih atau ketik tag berita',
+            placeholder: 'Select or type a news tag',
             width: '100%',
             tags: true,
             tokenSeparators: [',']

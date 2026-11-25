@@ -18,7 +18,7 @@
                 <div>
                     <div class="login-main">
 
-                        <a class="logo" href="{{ route('home') }}">
+                        <a class="logo" href="{{ route('index') }}">
                             <img class="img-fluid" style="max-height: 50px;"
                                 src="{{asset('assets/images/logo_po.png')}}" alt="looginpage">
                         </a>
