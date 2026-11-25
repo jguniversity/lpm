@@ -50,6 +50,10 @@
     <style>
         body {
             background: #f8f9fa;
+        }        
+        
+        .dropdown-basic .dropdown .dropdown-content a {
+            padding: 16px 16px;
         }
 
         .news-page {
@@ -226,10 +230,22 @@
 
                         <div class="news-card">
                             <a href="{{ route('news.show', $post->slug) }}">
-                                <img
-                                    src="{{ $post->thumbnail
+                                @php
+                                    $thumbnail = $post->thumbnail
                                         ? asset('storage/' . $post->thumbnail)
-                                        : asset('assets/images/landing/screen2.jpg') }}"
+                                        : null;
+
+                                    if (!$thumbnail && !empty($post->content)) {
+                                        preg_match('/<img[^>]+src=["\']([^"\']+)["\']/i', $post->content, $matches);
+                                        if (!empty($matches[1])) {
+                                            $thumbnail = $matches[1];
+                                        }
+                                    }
+
+                                    $thumbnail = $thumbnail ?: asset('assets/images/landing/screen2.jpg');
+                                @endphp
+                                <img
+                                    src="{{ $thumbnail }}"
                                     class="news-image"
                                     alt="{{ $post->title }}"
                                     loading="lazy"

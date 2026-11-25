@@ -38,7 +38,7 @@
         <div class="">
             <div class="sticky-header">
                 <header>
-                    <nav class="navbar navbar-b navbar-trans navbar-expand-xl fixed-top nav-padding container-fluid px-5 pt-3"
+                    <nav class="navbar navbar-b navbar-trans navbar-expand-xl fixed-top nav-padding container-fluid px-md-5 pt-3"
                         id="sidebar-menu">
                         <a class="navbar-brand p-0" href="{{ route('index') }}"><img class="img-fluid"
                                 src="{{ asset('assets/images/logo-white.png') }}" alt="JGU"

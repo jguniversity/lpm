@@ -46,6 +46,8 @@
 </head>
 
 <body class="landing-page">
+
+    @include('layouts.master-nav-menu')
     <div class="loader-wrapper">
         <div class="loader-index"><span></span></div>
         <svg>
@@ -76,21 +78,6 @@
                 </li>
             </ul>
             <div class="container-fluid">
-                <div class="sticky-header">
-                    <header>
-                        <nav class="navbar navbar-b navbar-trans navbar-expand-xl fixed-top nav-padding"
-                            id="sidebar-menu"><a class="navbar-brand p-0" href="{{ route('index') }}"><img
-                                    class="img-fluid" src="{{ asset('assets/images/logo-white.png') }}" alt="JGU"></a>
-                            <button class="navbar-toggler navabr_btn-set custom_nav" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#navbarDefault" aria-controls="navbarDefault"
-                                aria-expanded="false"
-                                aria-label="Toggle navigation"><span></span><span></span><span></span></button>
-                            <div class="navbar-collapse justify-content-end collapse hidenav" id="navbarDefault">
-
-                            </div>
-                        </nav>
-                    </header>
-                </div>
 
                 <!-- EDIT HOME MULAI DARI SINI -->
 

@@ -65,6 +65,9 @@
         body {
             background: #f8f9fa;
         }
+        .dropdown-basic .dropdown .dropdown-content a {
+            padding: 16px 16px;
+        }
 
         .news-navbar {
             background: #fff;
@@ -255,9 +258,9 @@
 
     <div class="page-wrapper mt-5 pt-4" style="min-height: 95vh">
         <!-- JUDUL BERITA -->
-        <section class=" pt-5">
+        <section class="pt-5">
             <div class="container">
-                <div class="news-breadcrumb mb-0">
+                <div class="news-breadcrumb mb-0 px-1">
                     <a href="{{ route('index') }}#news"><i class="icofont icofont-ui-home"></i></a>
                     <i class="fa fa-angle-right mx-2"></i>
                     <a href="{{ route('news.index') }}">Berita</a>
@@ -400,6 +403,21 @@
                                 alt="{{ $post->title }}">
                         @endif
 
+                        <form action="{{ route('news.index') }}" method="GET">
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-8">
+                                    <input type="text" name="search" class="form-control" placeholder="Cari berita..."
+                                        value="{{ request('search') }}">
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-danger w-100">
+                                        <i class="fa fa-search"></i> Cari
+                                    </button>
+                                </div>
+
+                            </div>
+                        </form>
+
                         <div class="news-sidebar">
 
                             <h4 class="mb-4">Berita Terbaru</h4>
@@ -408,12 +426,33 @@
 
                             <a href="{{ route('news.show', $latest->slug) }}" class="sidebar-news">
 
-                                @if($latest->thumbnail)
-                                <img src="{{ asset('storage/' . $latest->thumbnail) }}" alt="{{ $latest->title }}">
-                                @else
-                                <img src="{{ asset('assets/images/blog/blog-7.jpg') }}" alt="{{ $latest->title }}">
-                                @endif
+                                @php
+                                    $latestThumbnail = $latest->thumbnail
+                                        ? asset('storage/' . $latest->thumbnail)
+                                        : null;
 
+                                    // Jika thumbnail kosong, ambil gambar pertama dari konten
+                                    if (!$latestThumbnail && !empty($latest->content)) {
+                                        preg_match(
+                                            '/<img[^>]+src=["\']([^"\']+)["\']/i',
+                                            $latest->content,
+                                            $matches
+                                        );
+
+                                        if (!empty($matches[1])) {
+                                            $latestThumbnail = $matches[1];
+                                        }
+                                    }
+
+                                    // Jika tidak ada gambar, gunakan gambar default
+                                    $latestThumbnail = $latestThumbnail
+                                        ?: asset('assets/images/landing/screen2.jpg');
+                                @endphp
+                                <img
+                                    src="{{ $latestThumbnail }}"
+                                    alt="{{ $latest->title }}"
+                                    loading="lazy"
+                                    decoding="async">
                                 <div>
                                     <h6 class="mb-1">
                                         {{ $latest->title }}
@@ -461,15 +500,36 @@
 
                             <div class="card related-card h-100">
 
+                                
+                                @php
+                                    $relatedThumbnail = $related->thumbnail
+                                        ? asset('storage/' . $related->thumbnail)
+                                        : null;
+
+                                    // Ambil gambar pertama dari konten jika thumbnail kosong
+                                    if (!$relatedThumbnail && !empty($related->content)) {
+                                        preg_match(
+                                            '/<img[^>]+src=["\']([^"\']+)["\']/i',
+                                            $related->content,
+                                            $matches
+                                        );
+
+                                        if (!empty($matches[1])) {
+                                            $relatedThumbnail = $matches[1];
+                                        }
+                                    }
+
+                                    // Gunakan gambar default jika tidak ada gambar
+                                    $relatedThumbnail = $relatedThumbnail
+                                        ?: asset('assets/images/landing/screen2.jpg');
+                                @endphp
+
                                 <a href="{{ route('news.show', $related->slug) }}">
-
-                                    @if($related->thumbnail)
-                                    <img src="{{ asset('storage/' . $related->thumbnail) }}"
-                                        alt="{{ $related->title }}">
-                                    @else
-                                    <img src="{{ asset('assets/images/blog/blog-7.jpg') }}" alt="{{ $related->title }}">
-                                    @endif
-
+                                    <img
+                                        src="{{ $relatedThumbnail }}"
+                                        alt="{{ $related->title }}"
+                                        loading="lazy"
+                                        decoding="async">
                                 </a>
 
                                 <div class="card-body">

@@ -307,17 +307,26 @@
                                     <div class="blog-box blog-grid text-center">
 
                                         <a href="{{ route('news.show', $post->slug) }}">
-                                            @if($post->thumbnail)
+                                            @php
+                                                $thumbnail = $post->thumbnail
+                                                    ? asset('storage/' . $post->thumbnail)
+                                                    : null;
+
+                                                if (!$thumbnail && !empty($post->content)) {
+                                                    preg_match('/<img[^>]+src=["\']([^"\']+)["\']/i', $post->content, $matches);
+
+                                                    if (!empty($matches[1])) {
+                                                        $thumbnail = $matches[1];
+                                                    }
+                                                }
+
+                                                $thumbnail = $thumbnail ?: asset('assets/images/landing/screen2.jpg');
+                                            @endphp
                                             <img class="img-fluid top-radius-blog"
-                                                src="{{ asset('storage/' . $post->thumbnail) }}"
-                                                alt="{{ $post->title }}"
-                                                style="width: 100%; height: 200px; object-fit: cover;">
-                                            @else
-                                            <img class="img-fluid top-radius-blog"
-                                                src="{{ asset('assets/images/landing/screen2.jpg') }}"
-                                                alt="{{ $post->title }}"
-                                                style="width: 100%; height: 200px; object-fit: cover;">
-                                            @endif
+                                            src="{{ $thumbnail }}"
+                                            alt="{{ $post->title }}"
+                                            loading="lazy"
+                                            style="width: 100%; height: 200px; object-fit: cover;">
                                         </a>
 
                                         <div class="blog-details-main">

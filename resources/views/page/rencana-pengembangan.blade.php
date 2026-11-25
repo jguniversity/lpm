@@ -23,72 +23,73 @@
     @include('layouts.css')
     @yield('style')
     <style>
-    .chart-container {
-        width: 100%;
-        margin: 10px 0 0;
-    }
-
-    .chart-card {
-        border: none;
-        border-radius: 18px;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-        box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
-    }
-
-    .chart-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 20px 45px rgba(15, 23, 42, 0.15);
-    }
-
-    .year-filter-btn.active {
-        background-color: #2563eb !important;
-        color: white !important;
-        border-color: #2563eb !important;
-    }
-
-    .year-filter-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .evidence-btn {
-        border-radius: 999px;
-        font-weight: 600;
-        letter-spacing: 0.2px;
-    }
-
-    .evidence-btn:hover {
-        transform: translateY(-1px);
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 1024px) {
         .chart-container {
-            height: 300px !important;
+            width: 100%;
+            margin: 10px 0 0;
         }
-    }
 
-    .page-wrapper.compact-wrapper .nav-right .nav-menus {
-        margin-right: 0px;
-    }
+        .chart-card {
+            border: none;
+            border-radius: 18px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+        }
 
-    .dropdown-basic .dropdown .dropdown-content a {
-        padding: 16px 16px;
-    }
+        .chart-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.15);
+        }
 
-    .landing-home .content {
-        text-align: left;
-        margin-left: 20px;
-    }
-    .table-sm th, .table-sm td {
-        padding: 0px;
-    }
+        .year-filter-btn.active {
+            background-color: #2563eb !important;
+            color: white !important;
+            border-color: #2563eb !important;
+        }
+
+        .year-filter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .evidence-btn {
+            border-radius: 999px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+        }
+
+        .evidence-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .chart-container {
+                height: 300px !important;
+            }
+        }
+
+        .page-wrapper.compact-wrapper .nav-right .nav-menus {
+            margin-right: 0px;
+        }
+
+        .dropdown-basic .dropdown .dropdown-content a {
+            padding: 16px 16px;
+        }
+
+        .landing-home .content {
+            text-align: left;
+            margin-left: 20px;
+        }
+        .table-sm th, .table-sm td {
+            padding: 0px;
+        }
     </style>
     <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="https://cdn.canvasjs.com/jquery.canvasjs.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body class="landing-page">
+    @include('layouts.master-nav-menu')
     <div class="loader-wrapper">
         <div class="loader-index">
             <span></span>
@@ -130,21 +131,6 @@
                 </li>
             </ul>
             <div class="container-fluid">
-                <div class="sticky-header">
-                    <header>
-                        <nav class="navbar navbar-b navbar-trans navbar-expand-xl fixed-top nav-padding" id="sidebar-menu">
-                            <a class="navbar-brand p-0" href="{{ route('index') }}">
-                                <img class="img-fluid" src="{{ asset('assets/images/logo-white.png') }}" alt="JGU">
-                            </a>
-                            <button class="navbar-toggler navabr_btn-set custom_nav" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDefault" aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </button>
-                            <div class="navbar-collapse justify-content-end collapse hidenav" id="navbarDefault"></div>
-                        </nav>
-                    </header>
-                </div>
                 <div class="row">
                     <div class="col-xl-5 col-lg-6">
                         <div class="content ">
